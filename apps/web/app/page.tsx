@@ -21,7 +21,7 @@ export default function Home() {
       <main className={styles.main}>
 
         <h1 className={styles.title}>Elevate Your Style with Our Expertise</h1>
-
+        <h1 className={styles.title}>and also a little bit of AI</h1>
         <p className={styles.tagline}>
 
           Discover personalized fashion consultations that make every look unforgettable.
