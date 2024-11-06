@@ -1,0 +1,125 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+  color: #ffffff;
+  font-family: 'Arial', sans-serif;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 45%;
+}
+
+.resultContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 45%;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 0.5rem;
+}
+
+.inputGroup label {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.selectDropdown {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333333;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.selectDropdown:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: scale(1.05);
+}
+
+.textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333333;
+}
+
+.textarea::placeholder {
+  color: #999999;
+}
+
+.submitButton {
+  padding: 12px;
+  font-size: 1.2rem;
+  background-color: #4a90e2;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 1s ease;
+}
+
+.submitButton:hover {
+  background-color: #357abf;
+}
+
+.error {
+  color: red;
+  font-size: 1rem;
+}
+
+.resultContainer h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.resultContainer p {
+  font-size: 1rem;
+}
