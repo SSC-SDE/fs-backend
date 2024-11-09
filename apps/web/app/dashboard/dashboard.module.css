@@ -81,7 +81,13 @@
 .main {
   padding: 20px;
 }
+.profileInfo {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc; /* Optional border */
+  border-radius: 5px; /* Optional rounded corners */
 
+}
 .formContainer {
   max-width: 600px;
 }
@@ -204,4 +210,53 @@
 
 .resultContainer p {
   font-size: 1rem;
+}
+
+.inputGroup {
+  margin-bottom: 20px;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #ffffff; /* Darker color for labels */
+}
+
+.inputGroup input {
+  width: 100%; /* Full width */
+  padding: 12px; /* Increased padding for better touch targets */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  font-size: 1rem; /* Font size */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+.inputGroup input:focus {
+  border-color: #00c6ff; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(0, 198, 255, 0.5); /* Light blue shadow */
+  outline: none; /* Remove default outline */
+}
+
+.inputGroup input::placeholder {
+  color: #aaa; /* Placeholder text color */
+}
+
+.submitButton {
+  background-color: #00c6ff; /* Button background color */
+  color: white; /* Button text color */
+  padding: 12px 20px; /* Padding for the button */
+  border: none; /* Remove border */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 1rem; /* Font size */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+.submitButton:hover {
+  background-color: #0099cc; /* Darker blue on hover */
+}
+
+.submitButton:active {
+  transform: scale(0.95); /* Slightly shrink on click */
 }

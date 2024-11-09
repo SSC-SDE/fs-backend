@@ -1,13 +1,15 @@
 "use client"; // Ensures this component runs on the client side in Next.js
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
-import styles from "../dashboard/dashboard.module.css";
+import styles from "../dashboard/dashboard.module.css"; // Import styles
+import Header from "../header/headernav";
 
 export default function Profile() {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [newName, setNewName] = useState<string>("");
+  const [newEmail, setNewEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
@@ -17,13 +19,13 @@ export default function Profile() {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/users/user/${localStorage.getItem('userId')}`, { // Replace <USER_ID> with the actual user ID
+        const response = await fetch(`http://localhost:5000/api/users/user/${localStorage.getItem('userId')}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem('token')}` // Assuming you store the token in local storage
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
           },
-          credentials: "include", // Include cookies for authentication
+          credentials: "include",
         });
 
         if (response.ok) {
@@ -48,15 +50,14 @@ export default function Profile() {
     setSuccessMessage("");
 
     try {
-      // Send updated profile data to the backend
-      const response = await fetch(`http://localhost:5000/api/users/${localStorage.getItem('userId')}`, { // Replace <USER_ID> with the actual user ID
+      const response = await fetch(`http://localhost:5000/api/users/${localStorage.getItem('userId')}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem('accessToken')}` // Assuming you store the token in local storage
+          "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
         },
-        credentials: "include", // Allow cookies to be sent
-        body: JSON.stringify({ name, email, password }), // Send updated fields
+        credentials: "include",
+        body: JSON.stringify({ newName, newEmail, password }),
       });
 
       if (response.ok) {
@@ -75,29 +76,27 @@ export default function Profile() {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <h1>The Crescendo</h1>
-        <nav className={styles.navMenu}>
-          <Link href="/dashboard" className={styles.navItem}>Home</Link>
-          <Link href="/profile" className={styles.navItem}>Profile</Link>
-          <Link href="/settings" className={styles.navItem}>Settings</Link>
-          <a href="#" className={styles.navItem}>Logout</a>
-        </nav>
-      </header>
+      <Header />
       <main className={styles.main}>
         <div className={styles.formContainer}>
-          <h2 className={styles.title}>Update Profile</h2>
+          <h2 className={styles.title}>Current Profile</h2>
           {error && <p className={styles.error}>{error}</p>}
           {successMessage && <p className={styles.success}>{successMessage}</p>}
+          <div className={styles.profileInfo}>
+            <p><strong>Name:</strong> {name}</p>
+            <p><strong>Email:</strong> {email}</p>
+          </div>
+
+          <h2 className={styles.title}>Update Profile</h2>
           <form className={styles.form} onSubmit={handleUpdateProfile}>
             <div className={styles.inputGroup}>
               <label htmlFor="name">Name</label>
               <input
                 type="text"
                 id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter your name"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                placeholder="Enter your new name"
                 required
               />
             </div>
@@ -106,9 +105,9 @@ export default function Profile() {
               <input
                 type="email"
                 id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                placeholder="Enter your new email"
                 required
               />
             </div>

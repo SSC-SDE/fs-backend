@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import styles from "./dashboard.module.css"; // Import the updated styles
 import Link from "next/link";
+import Header from "../header/headernav";
 
 export default function Dashboard() {
   const [inputData, setInputData] = useState("");
@@ -77,15 +78,7 @@ export default function Dashboard() {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <h1>The Crescendo</h1>
-        <nav className={styles.navMenu}>
-        <Link href="/dashboard" className={styles.navItem}>Home</Link>
-          <Link href="/profile" className={styles.navItem}>Profile</Link>
-          <Link href="/settings" className={styles.navItem}>Settings</Link>
-          <a href="#" className={styles.navItem}>Logout</a>
-        </nav>
-      </header>
+      <Header />
       <main className={styles.main}>
         <div className={styles.formContainer}>
           <h3 className={styles.title}>Essentials for Your Glow!</h3>
