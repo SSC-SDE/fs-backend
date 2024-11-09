@@ -3,14 +3,96 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-top: 80px;
   min-height: 100vh;
-  background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+  /* Animated Gradient Background with More Colors */
+  background: linear-gradient(-45deg, 
+    #6a11cb, 
+    #2575fc, 
+    #ff512f, 
+    #dd2476, 
+    #ff9a8b, 
+    #ff6a00, 
+    #00c6ff, 
+    #cad100, 
+    #00d684, 
+    #00d2ff
+  );
+  background-size: 500% 500%; /* Increase background size for smoother transitions */
+  animation: gradientAnimation 20s ease infinite;
   color: #ffffff;
   font-family: 'Arial', sans-serif;
 }
 
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  20% {
+    background-position: 50% 100%;
+  }
+  40% {
+    background-position: 100% 50%;
+  }
+  60% {
+    background-position: 50% 0%;
+  }
+  80% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .header {
-  margin-bottom: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000; /* Ensures the header stays on top */
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.navMenu {
+  display: flex;
+  gap: 15px;
+}
+
+.navItem {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navItem:hover {
+  color: #00c6ff; /* Hover color */
+}
+
+.main {
+  padding: 20px;
+}
+
+.formContainer {
+  max-width: 600px;
+}
+
+.resultContainer {
+  margin-top: 20px;
+  padding: 10px;
+  overflow-wrap: break-word; /* Allows long words to break and wrap onto the next line */
+  word-wrap: break-word; /* Ensures compatibility with older browsers */
+  overflow: hidden; /* Prevents overflow of content */
+  max-width: 100%; /* Ensures the container does not exceed the parent width */
 }
 
 .main {

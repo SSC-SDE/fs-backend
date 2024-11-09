@@ -1,6 +1,7 @@
 "use client"; // Ensures this component runs on the client side in Next.js
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./dashboard.module.css"; // Import the updated styles
+import Link from "next/link";
 
 export default function Dashboard() {
   const [inputData, setInputData] = useState("");
@@ -14,28 +15,60 @@ export default function Dashboard() {
   const [selectedOption4, setSelectedOption4] = useState("");
   const [selectedOption5, setSelectedOption5] = useState("");
 
-  const handleSubmit = async (e:any) => {
+  // State for options fetched from the backend
+  const [venueOptions, setVenueOptions] = useState<string[]>([]);
+  const [colorOptions, setColorOptions] = useState<string[]>([]);
+  const [styleOptions, setStyleOptions] = useState<string[]>([]);
+  const [sizeOptions, setSizeOptions] = useState<string[]>([]);
+  const [moodOptions, setMoodOptions] = useState<string[]>([]);
+
+  // Fetch options from the backend on component mount
+  useEffect(() => {
+    const fetchOptions = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/options/getOptions");
+        if (res.ok) {
+          const data = await res.json();
+          setVenueOptions(data.venueOptions);
+          setColorOptions(data.colorOptions);
+          setStyleOptions(data.styleOptions);
+          setSizeOptions(data.sizeOptions);
+          setMoodOptions(data.moodOptions);
+        } else {
+          throw new Error("Failed to fetch options");
+        }
+      } catch (err: any) {
+        setError("Error loading options: " + err.message);
+      }
+    };
+
+    fetchOptions();
+  }, []);
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     setError("");
     setResponse("");
 
+    console.log("The Request Body", JSON.stringify({ inputData, selectedOptions: [selectedOption1, selectedOption2, selectedOption3, selectedOption4, selectedOption5] }));
+
     try {
-      const res = await fetch("/api/chatgpt", {
+      const res = await fetch("http://localhost:5000/api/openai", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ inputData, selectedOptions: [selectedOption1, selectedOption2, selectedOption3, selectedOption4, selectedOption5] }), // Send dropdown and text area data
+        body: JSON.stringify({ inputData, selectedOptions: [selectedOption1, selectedOption2, selectedOption3, selectedOption4, selectedOption5] }), 
       });
 
       if (res.ok) {
         const result = await res.json();
-        setResponse(result.response); // Set the response from OpenAI
+        setResponse(result.response); 
       } else {
         throw new Error("Failed to fetch data from OpenAI.");
       }
-    } catch (err:any) {
+    } catch (err: any) {
       setError(err.message);
     } finally {
       setLoading(false);
@@ -46,14 +79,19 @@ export default function Dashboard() {
     <div className={styles.page}>
       <header className={styles.header}>
         <h1>The Crescendo</h1>
+        <nav className={styles.navMenu}>
+        <Link href="/dashboard" className={styles.navItem}>Home</Link>
+          <Link href="/profile" className={styles.navItem}>Profile</Link>
+          <Link href="/settings" className={styles.navItem}>Settings</Link>
+          <a href="#" className={styles.navItem}>Logout</a>
+        </nav>
       </header>
       <main className={styles.main}>
         <div className={styles.formContainer}>
-          <h3 className={styles.title}>What's Cooking Good Looking</h3>
+          <h3 className={styles.title}>Essentials for Your Glow!</h3>
           <form className={styles.form} onSubmit={handleSubmit}>
-            {/* Dropdowns */}
             <div className={styles.inputGroup}>
-              <label htmlFor="selectOption1">Choose a Flavor:</label>
+              <label htmlFor="selectOption1">Choose a Venue:</label>
               <select
                 id="selectOption1"
                 className={styles.selectDropdown}
@@ -61,12 +99,12 @@ export default function Dashboard() {
                 onChange={(e) => setSelectedOption1(e.target.value)}
               >
                 <option value="">Select</option>
-                <option value="Spicy">Spicy</option>
-                <option value="Sweet">Sweet</option>
-                <option value="Sour">Sour</option>
-                <option value="Salty">Salty</option>
+                {venueOptions.map(option => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
               </select>
             </div>
+
             <div className={styles.inputGroup}>
               <label htmlFor="selectOption2">Choose a Color:</label>
               <select
@@ -76,11 +114,12 @@ export default function Dashboard() {
                 onChange={(e) => setSelectedOption2(e.target.value)}
               >
                 <option value="">Select</option>
-                <option value="Red">Red</option>
-                <option value="Green">Green</option>
-                <option value="Blue">Blue</option>
+                {colorOptions.map(option => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
               </select>
             </div>
+
             <div className={styles.inputGroup}>
               <label htmlFor="selectOption3">Pick a Style:</label>
               <select
@@ -90,11 +129,12 @@ export default function Dashboard() {
                 onChange={(e) => setSelectedOption3(e.target.value)}
               >
                 <option value="">Select</option>
-                <option value="Modern">Modern</option>
-                <option value="Classic">Classic</option>
-                <option value="Funky">Funky</option>
+                {styleOptions.map(option => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
               </select>
             </div>
+
             <div className={styles.inputGroup}>
               <label htmlFor="selectOption4">Choose a Size:</label>
               <select
@@ -104,11 +144,12 @@ export default function Dashboard() {
                 onChange={(e) => setSelectedOption4(e.target.value)}
               >
                 <option value="">Select</option>
-                <option value="Small">Small</option>
-                <option value="Medium">Medium</option>
-                <option value="Large">Large</option>
+                {sizeOptions.map(option => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
               </select>
             </div>
+
             <div className={styles.inputGroup}>
               <label htmlFor="selectOption5">Pick a Mood:</label>
               <select
@@ -118,13 +159,12 @@ export default function Dashboard() {
                 onChange={(e) => setSelectedOption5(e.target.value)}
               >
                 <option value="">Select</option>
-                <option value="Happy">Happy</option>
-                <option value="Sad">Sad</option>
-                <option value="Excited">Excited</option>
+                {moodOptions.map(option => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
               </select>
             </div>
-            
-            {/* Textarea */}
+
             <div className={styles.inputGroup}>
               <label htmlFor="inputData">Your Secret Sauce...</label>
               <textarea
@@ -143,7 +183,6 @@ export default function Dashboard() {
           {error && <p className={styles.error}>{error}</p>}
         </div>
         
-        {/* Response Box */}
         <div className={styles.resultContainer}>
           <h2>Your Recommendations</h2>
           {response && (
