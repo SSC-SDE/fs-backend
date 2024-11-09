@@ -32,7 +32,11 @@ export default function SignIn() {
         setError(result.message);
         if (result.accessToken) {  // Assuming the backend returns an access token in the response
           // Store the access token in local storage
-          localStorage.setItem("accessToken", result.accessToken);
+          localStorage.setItem('accessToken', result.accessToken);
+
+          localStorage.setItem('refreshToken', result.refreshToken);
+    
+          localStorage.setItem('userId', result.userId);
 
           console.log("Login successful:", result);
           

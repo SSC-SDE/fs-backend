@@ -17,10 +17,11 @@ export default function Profile() {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/auth/profile", {
+        const response = await fetch(`http://localhost:5000/api/users/user/${localStorage.getItem('userId')}`, { // Replace <USER_ID> with the actual user ID
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem('token')}` // Assuming you store the token in local storage
           },
           credentials: "include", // Include cookies for authentication
         });
@@ -48,10 +49,11 @@ export default function Profile() {
 
     try {
       // Send updated profile data to the backend
-      const response = await fetch("http://localhost:5000/api/auth/update-profile", {
-        method: "POST",
+      const response = await fetch(`http://localhost:5000/api/users/${localStorage.getItem('userId')}`, { // Replace <USER_ID> with the actual user ID
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem('accessToken')}` // Assuming you store the token in local storage
         },
         credentials: "include", // Allow cookies to be sent
         body: JSON.stringify({ name, email, password }), // Send updated fields
@@ -76,7 +78,7 @@ export default function Profile() {
       <header className={styles.header}>
         <h1>The Crescendo</h1>
         <nav className={styles.navMenu}>
-        <Link href="/dashboard" className={styles.navItem}>Home</Link>
+          <Link href="/dashboard" className={styles.navItem}>Home</Link>
           <Link href="/profile" className={styles.navItem}>Profile</Link>
           <Link href="/settings" className={styles.navItem}>Settings</Link>
           <a href="#" className={styles.navItem}>Logout</a>

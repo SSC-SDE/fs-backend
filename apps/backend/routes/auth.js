@@ -53,6 +53,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
+
     const accessToken = generateAccessToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
 
@@ -64,6 +65,7 @@ router.post('/login', async (req, res) => {
       accessToken,
       refreshToken,
       user,
+      userId: user._id.toString()
     });
   } catch (error) {
     console.error(error);
