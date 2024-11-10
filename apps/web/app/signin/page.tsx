@@ -57,7 +57,7 @@ export default function SignIn() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <Image src="/logo.png" alt="Brand Logo" width={100} height={50} />
+        <Image src="/logo.png" alt="OnlyFashionSense" width={100} height={50} />
       </header>
       <main className={styles.main}>
         <div className={styles.formContainer}>
@@ -90,6 +90,9 @@ export default function SignIn() {
               Sign In
             </button>
           </form>
+          <p className={styles.alternateAction}>
+  Forgot your password? <Link href="/forgotpassword">Reset it here</Link>
+</p>
           <p className={styles.alternateAction}>
             Don't have an account? <Link href="/register">Register here</Link>
           </p>

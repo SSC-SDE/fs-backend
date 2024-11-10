@@ -6,7 +6,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/userRoutes');
 const openaiRoute = require('./routes/openaiRoute');
 const getOptions = require('./routes/getOptions'); // Import getOptions route
-
+const passReset = require('./routes/forgetPassword');
 
 dotenv.config();
 
@@ -19,11 +19,13 @@ app.use(cors({ // Replace with your frontend URL
 }));
 
 // Middleware
-app.use(express.json());  // Ensure JSON body parsing is set up
+app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api', openaiRoute);
-app.use('/api/options', getOptions);  // Mount the getOptions route
+app.use('/api/options', getOptions); 
+app.use('/api', passReset);
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {

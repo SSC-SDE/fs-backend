@@ -9,8 +9,9 @@ const router = express.Router();
 
 // Function to generate tokens
 const generateAccessToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_ACCESS_EXPIRY });
+  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
 };
+
 
 const generateRefreshToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_REFRESH_EXPIRY });
@@ -44,7 +45,7 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-// Login route (optional, if you want to add login functionality)
+
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -52,7 +53,6 @@ router.post('/login', async (req, res) => {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
-
 
     const accessToken = generateAccessToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
@@ -64,7 +64,6 @@ router.post('/login', async (req, res) => {
       message: 'Login successful',
       accessToken,
       refreshToken,
-      user,
       userId: user._id.toString()
     });
   } catch (error) {
@@ -73,7 +72,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Endpoint to refresh access token
+
 router.post('/token', async (req, res) => {
   const { refreshToken } = req.body;
   if (!refreshToken) return res.status(403).json({ message: 'Refresh token required' });

@@ -94,6 +94,7 @@
 
 .resultContainer {
   margin-top: 20px;
+  margin-left: 50px;
   padding: 10px;
   overflow-wrap: break-word; /* Allows long words to break and wrap onto the next line */
   word-wrap: break-word; /* Ensures compatibility with older browsers */
@@ -114,7 +115,11 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 45%;
+  width: 55%;
+  overflow-wrap: break-word; /* Allows long words to break and wrap onto the next line */
+  word-wrap: break-word; /* Ensures compatibility with older browsers */
+  overflow: hidden; /* Prevents overflow of content */
+  max-width: 100%;
 }
 
 .resultContainer {
@@ -259,4 +264,51 @@
 
 .submitButton:active {
   transform: scale(0.95); /* Slightly shrink on click */
+}
+
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.toggleLabel {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.toggleInput {
+  display: none; /* Hide the default checkbox */
+}
+
+.toggleSwitch {
+  position: relative;
+  width: 50px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 50px;
+  margin-left: 10px;
+  transition: background-color 0.3s;
+}
+
+.toggleSwitch::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+
+.toggleInput:checked + .toggleSwitch {
+  background-color: #4caf50; /* Green when checked */
+}
+
+.toggleInput:checked + .toggleSwitch::before {
+  transform: translateX(26px); /* Move the toggle to the right */
 }
