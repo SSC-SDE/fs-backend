@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const authenticateUser = require('../authenticateUser.js/authenticateUser');
+const authenticateUser = require('../authenticateUser/authenticateUser');
 const Query = require('../models/queryModel');
 
 // Middleware to authenticate the user

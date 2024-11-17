@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const OpenAI = require('openai');
-const authenticateUser = require('../authenticateUser.js/authenticateUser');
+const authenticateUser = require('../authenticateUser/authenticateUser');
 const Query = require('../models/queryModel');
 const router = express.Router();
 

@@ -27,7 +27,7 @@ export default function SignIn() {
       });
 
       if (response.ok) {
-        
+        console.log("response", response);
         const result = await response.json();
         setError(result.message);
         if (result.accessToken) {  // Assuming the backend returns an access token in the response
