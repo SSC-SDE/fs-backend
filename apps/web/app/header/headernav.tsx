@@ -30,9 +30,8 @@ export default function Header() {
       <nav className={styles.navMenu}>
 
         <Link href="/dashboard" className={styles.navItem}>Home</Link>
-
+        <Link href="/history" className={styles.navItem}>History</Link>
         <Link href="/profile" className={styles.navItem}>Profile</Link>
-
         <Link href="/settings" className={styles.navItem}>Settings</Link>
 
         <button onClick={handleLogout} className={styles.logoutButton}>

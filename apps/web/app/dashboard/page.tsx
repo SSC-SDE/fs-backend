@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import styles from "./dashboard.module.css"; // Import the updated styles
 import Link from "next/link";
 import Header from "../header/headernav";
+import ReactMarkdown from "react-markdown";
 
 export default function Dashboard() {
   const [inputData, setInputData] = useState("");
@@ -15,6 +16,7 @@ export default function Dashboard() {
   const [selectedOption3, setSelectedOption3] = useState("");
   const [selectedOption4, setSelectedOption4] = useState("");
   const [selectedOption5, setSelectedOption5] = useState("");
+  const [selectedOption6, setSelectedOption6] = useState("");
 
   // State for options fetched from the backend
   const [venueOptions, setVenueOptions] = useState<string[]>([]);
@@ -22,6 +24,7 @@ export default function Dashboard() {
   const [styleOptions, setStyleOptions] = useState<string[]>([]);
   const [sizeOptions, setSizeOptions] = useState<string[]>([]);
   const [moodOptions, setMoodOptions] = useState<string[]>([]);
+  const [genderOrientation, setGenderOrientation] = useState<string[]>([]);
 
   // Fetch options from the backend on component mount
   useEffect(() => {
@@ -35,6 +38,7 @@ export default function Dashboard() {
           setStyleOptions(data.styleOptions);
           setSizeOptions(data.sizeOptions);
           setMoodOptions(data.moodOptions);
+          setGenderOrientation(data.genderOptions);
         } else {
           throw new Error("Failed to fetch options");
         }
@@ -52,6 +56,15 @@ export default function Dashboard() {
     setError("");
     setResponse("");
 
+    const token = localStorage.getItem("accessToken");
+    console.log("The Token Being Sent:", token);
+  
+    if (!token) {
+      setError("No token found. Please log in again.");
+      setLoading(false);
+      return;
+    }
+
     console.log("The Request Body", JSON.stringify({ inputData, selectedOptions: [selectedOption1, selectedOption2, selectedOption3, selectedOption4, selectedOption5] }));
 
     try {
@@ -59,8 +72,9 @@ export default function Dashboard() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
-        body: JSON.stringify({ inputData, selectedOptions: [selectedOption1, selectedOption2, selectedOption3, selectedOption4, selectedOption5] }), 
+        body: JSON.stringify({inputData, selectedOptions: [selectedOption1, selectedOption2, selectedOption3, selectedOption4, selectedOption5, selectedOption6] }), 
       });
 
       if (res.ok) {
@@ -159,6 +173,21 @@ export default function Dashboard() {
             </div>
 
             <div className={styles.inputGroup}>
+              <label htmlFor="selectOption6">Pick Gender Orientation</label>
+              <select
+                id="selectOption6"
+                className={styles.selectDropdown}
+                value={selectedOption6}
+                onChange={(e) => setSelectedOption6(e.target.value)}
+              >
+                <option value="">Select</option>
+                {genderOrientation.map(option => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className={styles.inputGroup}>
               <label htmlFor="inputData">Your Secret Sauce...</label>
               <textarea
                 id="inputData"
@@ -181,7 +210,7 @@ export default function Dashboard() {
           {response && (
             <div>
               <h2>Response from OpenAI:</h2>
-              <p>{response}</p>
+              <ReactMarkdown>{response}</ReactMarkdown>
             </div>
           )}
         </div>

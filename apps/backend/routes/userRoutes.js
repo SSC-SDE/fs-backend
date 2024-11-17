@@ -4,6 +4,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const authenticateUser = require('../authenticateUser.js/authenticateUser');
+const Query = require('../models/queryModel');
 
 // Middleware to authenticate the user
 const authenticateToken = (req, res, next) => {
@@ -65,6 +67,17 @@ router.put('/:id', authenticateToken, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.get('/user-queries', authenticateUser, async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    const queries = await Query.find({ userId }).sort({ createdAt: -1 });
+    res.status(200).json({ queries });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch queries", error: error.message });
   }
 });
 

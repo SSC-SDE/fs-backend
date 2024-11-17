@@ -37,8 +37,6 @@ export default function SignIn() {
           localStorage.setItem('refreshToken', result.refreshToken);
     
           localStorage.setItem('userId', result.userId);
-
-          console.log("Login successful:", result);
           
           // Redirect to another page after login, e.g., dashboard
           router.push("/dashboard");  

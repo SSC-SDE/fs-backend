@@ -312,3 +312,53 @@
 .toggleInput:checked + .toggleSwitch::before {
   transform: translateX(26px); /* Move the toggle to the right */
 }
+
+.queryTable {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.queryLeft, .queryRight {
+  padding: 10px;
+}
+
+.queryLeft {
+  width: 30%;
+  font-weight: bold;
+}
+
+.queryRight {
+  width: 70%;
+}
+
+.queryItem {
+  margin-bottom: 20px;
+}
+
+.queryResponse {
+  padding: 10px;
+ 
+  margin-top: 10px;
+}
+
+.noQueries {
+  text-align: center;
+}
+
+.queryList {
+  list-style: none;
+  padding: 0;
+}
+
+.history-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.history-button:hover {
+  background-color: #0056b3;
+}

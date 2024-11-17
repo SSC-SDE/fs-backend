@@ -1,0 +1,36 @@
+.queryTable {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+  }
+  
+  .queryLeft, .queryRight {
+    padding: 10px;
+  }
+  
+  .queryLeft {
+    width: 30%;
+    font-weight: bold;
+  }
+  
+  .queryRight {
+    width: 70%;
+  }
+  
+  .queryItem {
+    margin-bottom: 20px;
+  }
+  
+  .noQueries {
+    text-align: center;
+  }
+  
+  .queryList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .queryTable td {
+    vertical-align: top;
+  }
+  

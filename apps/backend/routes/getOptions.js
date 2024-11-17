@@ -6,11 +6,12 @@ const router = express.Router();
 router.get("/getOptions", async (req, res) => {
 
     res.json({
-      venueOptions: ["Spicy", "Sweet", "Sour", "Salty"],
+      venueOptions: ["Restaurant", "Cafe", "Bar", "Club", "Beach", "Park", "Movie Theatre"],
       colorOptions: ["Red", "Green", "Blue"],
       styleOptions: ["Modern", "Classic", "Funky"],
       sizeOptions: ["Small", "Medium", "Large"],
       moodOptions: ["Happy", "Sad", "Excited"],
+      genderOptions: ["Masculine","Feminine","Non-Binary"]
     });
 });
 
