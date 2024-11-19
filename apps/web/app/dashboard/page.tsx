@@ -17,10 +17,12 @@ export default function Dashboard() {
   const [selectedOption4, setSelectedOption4] = useState("");
   const [selectedOption5, setSelectedOption5] = useState("");
   const [selectedOption6, setSelectedOption6] = useState("");
+  const [otherMood, setOtherMood] = useState("");
+  const [showTextAreaMood, setshowTextAreaMood] = useState<boolean>(false);
 
   // State for options fetched from the backend
   const [venueOptions, setVenueOptions] = useState<string[]>([]);
-  const [colorOptions, setColorOptions] = useState<string[]>([]);
+  const [timeOptions, setTimeOptions] = useState<string[]>([]);
   const [styleOptions, setStyleOptions] = useState<string[]>([]);
   const [sizeOptions, setSizeOptions] = useState<string[]>([]);
   const [moodOptions, setMoodOptions] = useState<string[]>([]);
@@ -34,7 +36,7 @@ export default function Dashboard() {
         if (res.ok) {
           const data = await res.json();
           setVenueOptions(data.venueOptions);
-          setColorOptions(data.colorOptions);
+          setTimeOptions(data.timeOptions);
           setStyleOptions(data.styleOptions);
           setSizeOptions(data.sizeOptions);
           setMoodOptions(data.moodOptions);
@@ -49,6 +51,12 @@ export default function Dashboard() {
 
     fetchOptions();
   }, []);
+
+  useEffect(()=> {
+if(selectedOption5 === "other"){
+  setshowTextAreaMood(true);
+}
+  },[selectedOption5])
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -74,7 +82,7 @@ export default function Dashboard() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
-        body: JSON.stringify({inputData, selectedOptions: [selectedOption1, selectedOption2, selectedOption3, selectedOption4, selectedOption5, selectedOption6] }), 
+        body: JSON.stringify({inputData, selectedOptions: [selectedOption1, selectedOption2, selectedOption3, selectedOption5, selectedOption6] }), 
       });
 
       if (res.ok) {
@@ -95,7 +103,7 @@ export default function Dashboard() {
       <Header />
       <main className={styles.main}>
         <div className={styles.formContainer}>
-          <h3 className={styles.title}>Essentials for Your Glow!</h3>
+          <h3 className={styles.title}>Unlock Your Radiance!</h3>
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputGroup}>
               <label htmlFor="selectOption1">Choose a Venue:</label>
@@ -113,7 +121,7 @@ export default function Dashboard() {
             </div>
 
             <div className={styles.inputGroup}>
-              <label htmlFor="selectOption2">Choose a Color:</label>
+              <label htmlFor="selectOption2">Choose Attending Part of the Day:</label>
               <select
                 id="selectOption2"
                 className={styles.selectDropdown}
@@ -121,7 +129,7 @@ export default function Dashboard() {
                 onChange={(e) => setSelectedOption2(e.target.value)}
               >
                 <option value="">Select</option>
-                {colorOptions.map(option => (
+                {timeOptions.map(option => (
                   <option key={option} value={option}>{option}</option>
                 ))}
               </select>
@@ -143,33 +151,32 @@ export default function Dashboard() {
             </div>
 
             <div className={styles.inputGroup}>
-              <label htmlFor="selectOption4">Choose a Size:</label>
-              <select
-                id="selectOption4"
-                className={styles.selectDropdown}
-                value={selectedOption4}
-                onChange={(e) => setSelectedOption4(e.target.value)}
-              >
-                <option value="">Select</option>
-                {sizeOptions.map(option => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className={styles.inputGroup}>
-              <label htmlFor="selectOption5">Pick a Mood:</label>
+              <label htmlFor="selectOption5">Pick/Explain Your Mood:</label>
               <select
                 id="selectOption5"
                 className={styles.selectDropdown}
                 value={selectedOption5}
                 onChange={(e) => setSelectedOption5(e.target.value)}
               >
+                
                 <option value="">Select</option>
                 {moodOptions.map(option => (
                   <option key={option} value={option}>{option}</option>
                 ))}
+              
               </select>
+              {showTextAreaMood && (
+                <div className={styles.inputGroup}>
+                  <textarea
+                    id="inputData"
+                    className={styles.textarea}
+                    value={otherMood}
+                    onChange={(e) => setOtherMood(e.target.value)}
+                    placeholder="Describe your desired mood or emotion for the event"
+                    maxLength={60}
+                  />
+                </div>
+              )}
             </div>
 
             <div className={styles.inputGroup}>
@@ -188,16 +195,30 @@ export default function Dashboard() {
             </div>
 
             <div className={styles.inputGroup}>
-              <label htmlFor="inputData">Your Secret Sauce...</label>
+              <label htmlFor="inputData">Desired Outcome?</label>
               <textarea
                 id="inputData"
                 className={styles.textarea}
                 value={inputData}
                 onChange={(e) => setInputData(e.target.value)}
-                placeholder="What makes you... well you?"
+                placeholder="Explain your position in the setting"
+                maxLength={60}
+              />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="inputData">Spill the vibe! or What's your energy like?</label>
+              <textarea
+                id="inputData"
+                className={styles.textarea}
+                value={selectedOption4}
+                onChange={(e) => setSelectedOption4(e.target.value)}
+                placeholder="Explain your position in the setting"
+                maxLength={50}
                 required
               />
             </div>
+
             <button type="submit" className={styles.submitButton} disabled={loading}>
               {loading ? "Cooking..." : "Cook"}
             </button>

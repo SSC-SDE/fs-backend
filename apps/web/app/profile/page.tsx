@@ -8,6 +8,8 @@ import Header from "../header/headernav";
 export default function Profile() {
   const [currentName, setCurrentName] = useState<string>("");
   const [currentEmail, setCurrentEmail] = useState<string>("");
+  const [privilege, setPrivilege] = useState<string>("guest");
+  const [trialTokens,setTrialTokens] = useState<number>(0);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [oldPassword, setOldPassword] = useState<string>("");
@@ -32,8 +34,11 @@ export default function Profile() {
 
         if (response.ok) {
           const result = await response.json();
+          console.log(result, "result");
           setCurrentName(result.name);
           setCurrentEmail(result.email);
+          setPrivilege(result.role);
+          setTrialTokens(result.tokens.normal);
         } else {
           setError("Failed to fetch user profile. Please try again.");
         }
@@ -63,7 +68,6 @@ export default function Profile() {
       });
   
       // Log response status and text for debugging
-      console.log("Response status:", response.status);
   
       if (!response.ok) {
         const text = await response.text(); // Read as plain text
@@ -73,6 +77,7 @@ export default function Profile() {
         return;
       }
       const result = await response.json(); // Parse JSON if response is OK
+    
       setSuccessMessage("Profile updated successfully!");
       setError("");
     } catch (error) {
@@ -93,7 +98,8 @@ export default function Profile() {
           <div className={styles.profileInfo}>
             <p><strong>Name:</strong> {currentName}</p>
             <p><strong>Email:</strong> {currentEmail}</p>
-            <p><strong>Access:</strong> Guest</p>
+            <p><strong>Priviledge:</strong> {privilege}</p>
+            <p><strong>TrialMode:</strong> Enabled <strong>TrialKeysAvaialble:</strong> {trialTokens}</p>
           </div>
 
           {/* Fancy Toggle Switch for Update Profile Section */}

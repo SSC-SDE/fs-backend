@@ -64,7 +64,9 @@ router.post('/login', async (req, res) => {
       message: 'Login successful',
       accessToken,
       refreshToken,
-      userId: user._id.toString()
+      userId: user._id.toString(),
+      applicationToken: user.tokens,
+      role: user.role
     });
   } catch (error) {
     console.error(error);
@@ -80,13 +82,13 @@ router.post('/token', async (req, res) => {
 
   try {
     // Verify the refresh token
-    const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+    const payload = jwt.verify(refreshToken, process.env.JWT_SECRET);
 
     // Check if refresh token matches the one stored for the user
     const user = await User.findById(payload.userId);
-    if (!user || user.refreshToken !== refreshToken) {
-      return res.status(403).json({ message: 'Invalid refresh token' });
-    }
+    // if (!user || user.refreshToken !== refreshToken) {
+    //   return res.status(403).json({ message: 'Invalid refresh token' });
+    // }
 
     // Generate new access token
     const newAccessToken = generateAccessToken(user._id);
