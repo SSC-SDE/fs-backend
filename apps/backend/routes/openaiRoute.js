@@ -22,31 +22,78 @@ router.post('/openai', authenticateUser, async (req, res) => {
     }
 
     // Check if the user has enough normal tokens
-    if (user.tokens.normal <= 0) {
+    if ((user.role === "guest") && user.tokens.normal <= 0) {
       return res.status(403).json({ message: "No tokens left. Please upgrade to premium." });
     }
 
     // Reduce the token count by 1
+    if(user.role === "guest"){
     user.tokens.normal -= 1;
+  }
     await user.save();
 
     console.log(`Remaining tokens for user ${userId}: ${user.tokens.normal}`);
 
-    // Construct the prompt for OpenAI
     const prompt = `
-      Venue Type: ${selectedOptions[0]},
-      Time Preference: ${selectedOptions[1]},
-      Style Preference: ${selectedOptions[2]},
-      Vibe: ${selectedOptions[3]},
-      Mood: ${selectedOptions[4]},
-      GenderOrientation: ${selectedOptions[5]},
-      Additional Details: ${inputData}.
+{
+  "venueType": "${selectedOptions[0]}",
+  "timePreference": "${selectedOptions[1]}",
+  "stylePreference": "${selectedOptions[2]}",
+  "vibe": "${selectedOptions[3]}",
+  "mood": "${selectedOptions[4]}",
+  "genderOrientation": "${selectedOptions[5]}",
+  "additionalDetails": "${inputData}"
+}
+
+Based on these inputs, provide structured outfit recommendations in the following JSON format:
+
+{
+  "outfitRecommendations": [
+    {
+      "recommendationNumber": 1,
+      "outfitDetails": {
+        "title": "Recommendation Title",
+        "description": "Brief description of the outfit.",
+        "items": [
+          {
+            "item": "Item name",
+            "details": "Specific details or tips for the item."
+          }
+        ]
+      }
+    },
+    {
+      "recommendationNumber": 2,
+      "outfitDetails": {
+        "title": "Recommendation Title",
+        "description": "Brief description of the outfit.",
+        "items": [
+          {
+            "item": "Item name",
+            "details": "Specific details or tips for the item."
+          }
+        ]
+      }
+    }
+  ]
+}
+`;
+
+    // Construct the prompt for OpenAI
+    // const prompt = `
+    //   Venue Type: ${selectedOptions[0]},
+    //   Time Preference: ${selectedOptions[1]},
+    //   Style Preference: ${selectedOptions[2]},
+    //   Vibe: ${selectedOptions[3]},
+    //   Mood: ${selectedOptions[4]},
+    //   GenderOrientation: ${selectedOptions[5]},
+    //   Additional Details: ${inputData}.
       
-      Based on these inputs give me structured outfit recommendations in this format:
-      1. Markdown headers (###, ####) for sections.
-      2. Lists with numbered points (1., 2.) for each recommendation.
-      3. Bullet points for details within each recommendation.
-    `;
+    //   Based on these inputs give me structured outfit recommendations in this format:
+    //   1. Markdown headers (###, ####) for sections.
+    //   2. Lists with numbered points (1., 2.) for each recommendation.
+    //   3. Bullet points for details within each recommendation.
+    // `;
 
     // Call the OpenAI API
     const completion = await openai.chat.completions.create({

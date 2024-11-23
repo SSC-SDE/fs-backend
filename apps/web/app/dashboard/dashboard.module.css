@@ -362,3 +362,64 @@
 .history-button:hover {
   background-color: #0056b3;
 }
+
+.resultContainer {
+  padding: 20px;
+  text-align: center;
+}
+
+.accordionContainer {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.accordion {
+  flex: 1;
+  max-width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.accordionHeader {
+  width: 100%;
+  padding: 10px;
+  background: #007bff;
+  font-size: 16px;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+}
+
+.accordionHeader:hover {
+  background: #0056b3;
+}
+
+.accordionContent {
+  padding: 15px;
+  text-align: left;
+  color:black;
+  background-color: white;
+}
+
+.accordionContent h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.accordionContent p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.accordionContent ul {
+  list-style: none;
+  padding: 0;
+}
+
+.accordionContent ul li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}

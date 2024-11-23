@@ -1,16 +1,33 @@
 "use client"; // Ensures this component runs on the client side in Next.js
 import { useState, useEffect } from "react";
-import styles from "./dashboard.module.css"; // Import the updated styles
-import Link from "next/link";
+import styles from "./dashboard.module.css";
 import Header from "../header/headernav";
-import ReactMarkdown from "react-markdown";
+import Accordion from "../components/accordion";
+
+
+interface Recommendation {
+  recommendationNumber: number;
+  outfitDetails: {
+    title: string;
+    description: string;
+    items: { item: string; details: string }[];
+  };
+}
+
+interface response {
+  outfitRecommendations: Recommendation[];
+}
+
+
 
 export default function Dashboard() {
   const [inputData, setInputData] = useState("");
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState<response>({
+    outfitRecommendations: [],
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  
+
   const [selectedOption1, setSelectedOption1] = useState("");
   const [selectedOption2, setSelectedOption2] = useState("");
   const [selectedOption3, setSelectedOption3] = useState("");
@@ -18,32 +35,37 @@ export default function Dashboard() {
   const [selectedOption5, setSelectedOption5] = useState("");
   const [selectedOption6, setSelectedOption6] = useState("");
   const [otherMood, setOtherMood] = useState("");
-  const [showTextAreaMood, setshowTextAreaMood] = useState<boolean>(false);
+  const [showTextAreaMood, setShowTextAreaMood] = useState(false);
 
-  // State for options fetched from the backend
   const [venueOptions, setVenueOptions] = useState<string[]>([]);
   const [timeOptions, setTimeOptions] = useState<string[]>([]);
   const [styleOptions, setStyleOptions] = useState<string[]>([]);
-  const [sizeOptions, setSizeOptions] = useState<string[]>([]);
   const [moodOptions, setMoodOptions] = useState<string[]>([]);
   const [genderOrientation, setGenderOrientation] = useState<string[]>([]);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [showResult, setShowResult] = useState<boolean>(false);
 
-  // Fetch options from the backend on component mount
+  const toggleAccordion = (index: number) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
+
   useEffect(() => {
+setShowResult(true);
+  },[response])
+
+  // Fetch options on component mount
+  useEffect(() => {
+    setShowResult(false);
     const fetchOptions = async () => {
       try {
         const res = await fetch("http://localhost:5000/api/options/getOptions");
-        if (res.ok) {
-          const data = await res.json();
-          setVenueOptions(data.venueOptions);
-          setTimeOptions(data.timeOptions);
-          setStyleOptions(data.styleOptions);
-          setSizeOptions(data.sizeOptions);
-          setMoodOptions(data.moodOptions);
-          setGenderOrientation(data.genderOptions);
-        } else {
-          throw new Error("Failed to fetch options");
-        }
+        if (!res.ok) throw new Error("Failed to fetch options");
+        const data = await res.json();
+        setVenueOptions(data.venueOptions);
+        setTimeOptions(data.timeOptions);
+        setStyleOptions(data.styleOptions);
+        setMoodOptions(data.moodOptions);
+        setGenderOrientation(data.genderOptions);
       } catch (err: any) {
         setError("Error loading options: " + err.message);
       }
@@ -52,45 +74,49 @@ export default function Dashboard() {
     fetchOptions();
   }, []);
 
-  useEffect(()=> {
-if(selectedOption5 === "other"){
-  setshowTextAreaMood(true);
-}
-  },[selectedOption5])
+  useEffect(() => {
+    setShowTextAreaMood(selectedOption5 === "other");
+  }, [selectedOption5]);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    setResponse("");
+    setResponse({ outfitRecommendations: [] });
 
     const token = localStorage.getItem("accessToken");
-    console.log("The Token Being Sent:", token);
-  
     if (!token) {
       setError("No token found. Please log in again.");
       setLoading(false);
       return;
     }
 
-    console.log("The Request Body", JSON.stringify({ inputData, selectedOptions: [selectedOption1, selectedOption2, selectedOption3, selectedOption4, selectedOption5] }));
-
     try {
       const res = await fetch("http://localhost:5000/api/openai", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({inputData, selectedOptions: [selectedOption1, selectedOption2, selectedOption3, selectedOption5, selectedOption6] }), 
+        body: JSON.stringify({
+          inputData,
+          selectedOptions: [
+            selectedOption1,
+            selectedOption2,
+            selectedOption3,
+            selectedOption4,
+            selectedOption5,
+            selectedOption6,
+          ],
+        }),
       });
 
-      if (res.ok) {
-        const result = await res.json();
-        setResponse(result.response); 
-      } else {
-        throw new Error("Failed to fetch data from OpenAI.");
-      }
+      if (!res.ok) throw new Error("Failed to fetch data from OpenAI");
+
+      const result = await res.json();
+      console.log("result.response", JSON.parse(result.response));
+      setResponse(JSON.parse(result.response));
+      
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -102,9 +128,11 @@ if(selectedOption5 === "other"){
     <div className={styles.page}>
       <Header />
       <main className={styles.main}>
+        
         <div className={styles.formContainer}>
           <h3 className={styles.title}>Unlock Your Radiance!</h3>
           <form className={styles.form} onSubmit={handleSubmit}>
+            {/* Dropdown for Venue */}
             <div className={styles.inputGroup}>
               <label htmlFor="selectOption1">Choose a Venue:</label>
               <select
@@ -114,8 +142,10 @@ if(selectedOption5 === "other"){
                 onChange={(e) => setSelectedOption1(e.target.value)}
               >
                 <option value="">Select</option>
-                {venueOptions.map(option => (
-                  <option key={option} value={option}>{option}</option>
+                {venueOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>
@@ -225,17 +255,13 @@ if(selectedOption5 === "other"){
           </form>
           {error && <p className={styles.error}>{error}</p>}
         </div>
-        
+        { showResult &&
         <div className={styles.resultContainer}>
           <h2>Your Recommendations</h2>
-          {response && (
-            <div>
-              <h2>Response from OpenAI:</h2>
-              <ReactMarkdown>{response}</ReactMarkdown>
-            </div>
-          )}
+            <Accordion outfitRecommendations={response.outfitRecommendations}/>
         </div>
-      </main>
+        }
+    </main>
     </div>
   );
 }

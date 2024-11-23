@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['guest', 'premium'], // Define possible roles
+      enum: ['guest', 'premium', 'prime'], // Define possible roles
       default: 'guest',          // Default to 'guest'
     },
     tokens: {
