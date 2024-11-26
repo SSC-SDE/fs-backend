@@ -13,8 +13,21 @@ dotenv.config();
 const app = express();
 
 // Enable CORS for all routes
-app.use(cors({ // Replace with your frontend URL
-   origin: 'http://localhost:3000',
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://fs-backend-web-git-development-shankhyacs-projects.vercel.app',
+  'http://another-frontend-url.com'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,  // Allows cookies and headers to be passed along with requests
 }));
 
