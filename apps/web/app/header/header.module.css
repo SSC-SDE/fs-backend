@@ -1,0 +1,71 @@
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Ensures the header stays on top */
+  }
+  
+  .header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  
+  .navMenu {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .navItem {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  .navItem:hover {
+    color: #00c6ff; /* Hover color */
+  }
+  
+  .main {
+    padding: 20px;
+  }
+  
+  .formContainer {
+    max-width: 600px;
+  }
+  .logoutButton {
+
+    background-color: transparent;
+
+    border: none; /* Remove border */
+
+    color: white; /* Text color */
+
+    font-weight: bold; /* Bold text */
+
+    cursor: pointer; /* Pointer cursor on hover */
+
+    /* padding: 10px 15px; */
+
+    /* border-radius: 5px; Rounded corners */
+
+
+    display: flex; /* Flex display for alignment */
+
+    align-items: center; /* Center items vertically */
+
+}
+
+
+
+.logoutButton:active {
+
+    transform: scale(0.95); /* Slightly shrink on click */
+
+}

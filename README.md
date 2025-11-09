@@ -1,3 +1,61 @@
+Here's a project description for your Next.js-based OpenAPI chatbot using MongoDB and OpenAI's GPT:  
+
+---
+
+# **AI Chatbot with OpenAPI & Next.js**  
+
+## **Overview**  
+This project is a full-stack AI-powered chatbot that utilizes OpenAI’s GPT model to generate dynamic responses based on user input. Built with **Next.js**, **MongoDB**, and **OpenAPI**, the chatbot processes user queries, interacts with OpenAI’s API using tokens, and delivers intelligent responses. The backend is designed to handle authentication, request throttling, and response caching efficiently.  
+
+## **Key Features**  
+- **Next.js Frontend**: Provides a seamless and interactive user interface for engaging with the chatbot.  
+- **MongoDB Integration**: Stores user sessions, chat history, and API usage limits.  
+- **OpenAPI & OpenAI GPT**: Uses OpenAPI specifications to communicate securely with OpenAI’s GPT models.  
+- **Token-Based Authentication**: Ensures secure API calls using authentication tokens.  
+- **Rate Limiting**: Prevents excessive API usage with configurable request limits.  
+- **Real-Time Chat Responses**: Processes user input and delivers AI-generated responses instantly.  
+
+## **Tech Stack**  
+- **Frontend**: Next.js (React, TailwindCSS)  
+- **Backend**: Node.js, Express, OpenAPI  
+- **Database**: MongoDB (MongoDB Atlas)  
+- **Authentication**: JWT-based security  
+- **AI Integration**: OpenAI API (GPT models)  
+
+## **Project Structure**  
+- **Frontend**: Next.js app for user interaction  
+- **Backend**: Express API handling requests & communication with OpenAI  
+- **Database**: MongoDB for storing chat logs and user preferences  
+- **Authentication**: Token-based API access control  
+
+## **Installation & Setup**  
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/SSC-SDE/fs-backend.git
+   cd fs-backend
+   ```
+2. Install dependencies:  
+   ```bash
+   npm install
+   ```
+3. Set up environment variables in a `.env` file:  
+   ```plaintext
+   OPENAI_API_KEY=your_openai_key
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+   ```
+4. Start the development server:  
+   ```bash
+   npm run dev
+   ```
+
+## **Future Enhancements**  
+- Implement WebSockets for real-time chat updates  
+- Add user analytics and chat insights  
+- Expand support for multiple AI models  
+
+Would you like me to add anything specific, like API route details or database schema? 🚀
+
 # Turborepo starter
 
 This is an official starter Turborepo.

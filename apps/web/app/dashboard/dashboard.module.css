@@ -1,0 +1,425 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+  min-height: 100vh;
+  /* Animated Gradient Background with More Colors */
+  background: linear-gradient(-45deg, 
+    #6a11cb, 
+    #2575fc, 
+    #ff512f, 
+    #dd2476, 
+    #ff9a8b, 
+    #ff6a00, 
+    #00c6ff, 
+    #cad100, 
+    #00d684, 
+    #00d2ff
+  );
+  background-size: 500% 500%; /* Increase background size for smoother transitions */
+  animation: gradientAnimation 20s ease infinite;
+  color: #ffffff;
+  font-family: 'Arial', sans-serif;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  20% {
+    background-position: 50% 100%;
+  }
+  40% {
+    background-position: 100% 50%;
+  }
+  60% {
+    background-position: 50% 0%;
+  }
+  80% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000; /* Ensures the header stays on top */
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.navMenu {
+  display: flex;
+  gap: 15px;
+}
+
+.navItem {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navItem:hover {
+  color: #00c6ff; /* Hover color */
+}
+
+.main {
+  padding: 20px;
+}
+.profileInfo {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc; /* Optional border */
+  border-radius: 5px; /* Optional rounded corners */
+
+}
+.formContainer {
+  max-width: 600px;
+}
+
+.resultContainer {
+  margin-top: 20px;
+  margin-left: 50px;
+  padding: 10px;
+  overflow-wrap: break-word; /* Allows long words to break and wrap onto the next line */
+  word-wrap: break-word; /* Ensures compatibility with older browsers */
+  overflow: hidden; /* Prevents overflow of content */
+  max-width: 100%; /* Ensures the container does not exceed the parent width */
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 55%;
+  overflow-wrap: break-word; /* Allows long words to break and wrap onto the next line */
+  word-wrap: break-word; /* Ensures compatibility with older browsers */
+  overflow: hidden; /* Prevents overflow of content */
+  max-width: 100%;
+}
+
+.resultContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 45%;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 0.5rem;
+}
+
+.inputGroup label {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.selectDropdown {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333333;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.selectDropdown:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: scale(1.05);
+}
+
+.textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333333;
+}
+
+.textarea::placeholder {
+  color: #999999;
+}
+
+.submitButton {
+  padding: 12px;
+  font-size: 1.2rem;
+  background-color: #4a90e2;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 1s ease;
+}
+
+.submitButton:hover {
+  background-color: #357abf;
+}
+
+.error {
+  color: red;
+  font-size: 1rem;
+}
+
+.resultContainer h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.resultContainer p {
+  font-size: 1rem;
+}
+
+.inputGroup {
+  margin-bottom: 20px;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #ffffff; /* Darker color for labels */
+}
+
+.inputGroup input {
+  width: 100%; /* Full width */
+  padding: 12px; /* Increased padding for better touch targets */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  font-size: 1rem; /* Font size */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+.inputGroup input:focus {
+  border-color: #00c6ff; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(0, 198, 255, 0.5); /* Light blue shadow */
+  outline: none; /* Remove default outline */
+}
+
+.inputGroup input::placeholder {
+  color: #aaa; /* Placeholder text color */
+}
+
+.submitButton {
+  background-color: #00c6ff; /* Button background color */
+  color: white; /* Button text color */
+  padding: 12px 20px; /* Padding for the button */
+  border: none; /* Remove border */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 1rem; /* Font size */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+.submitButton:hover {
+  background-color: #0099cc; /* Darker blue on hover */
+}
+
+.submitButton:active {
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.toggleLabel {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.toggleInput {
+  display: none; /* Hide the default checkbox */
+}
+
+.toggleSwitch {
+  position: relative;
+  width: 50px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 50px;
+  margin-left: 10px;
+  transition: background-color 0.3s;
+}
+
+.toggleSwitch::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+
+.toggleInput:checked + .toggleSwitch {
+  background-color: #4caf50; /* Green when checked */
+}
+
+.toggleInput:checked + .toggleSwitch::before {
+  transform: translateX(26px); /* Move the toggle to the right */
+}
+
+.queryTable {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.queryLeft, .queryRight {
+  padding: 10px;
+}
+
+.queryLeft {
+  width: 30%;
+  font-weight: bold;
+}
+
+.queryRight {
+  width: 70%;
+}
+
+.queryItem {
+  margin-bottom: 20px;
+}
+
+.queryResponse {
+  padding: 10px;
+ 
+  margin-top: 10px;
+}
+
+.noQueries {
+  text-align: center;
+}
+
+.queryList {
+  list-style: none;
+  padding: 0;
+}
+
+.history-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.history-button:hover {
+  background-color: #0056b3;
+}
+
+.resultContainer {
+  padding: 20px;
+  text-align: center;
+}
+
+.accordionContainer {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.accordion {
+  flex: 1;
+  max-width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.accordionHeader {
+  width: 100%;
+  padding: 10px;
+  background: #007bff;
+  font-size: 16px;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+}
+
+.accordionHeader:hover {
+  background: #0056b3;
+}
+
+.accordionContent {
+  padding: 15px;
+  text-align: left;
+  color:black;
+  background-color: white;
+}
+
+.accordionContent h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.accordionContent p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.accordionContent ul {
+  list-style: none;
+  padding: 0;
+}
+
+.accordionContent ul li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
